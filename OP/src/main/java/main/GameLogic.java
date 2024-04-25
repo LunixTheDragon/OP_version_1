@@ -37,6 +37,10 @@ public class GameLogic {
             }
         } return false;
     }
+    public void movePlayer(){
+        float playerPosioton = getPlayer().getX();
+        playerPosioton += 15.0;
+    }
     
     public void update(){
     }

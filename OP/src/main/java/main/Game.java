@@ -27,7 +27,8 @@ public class Game implements Runnable{
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
-                    case KeyEvent.VK_LEFT -> controlled
+                    case KeyEvent.VK_LEFT -> controlledMove(Directions.LEFT);
+                    case KeyEvent.VK_RIGHT -> controlledMove(Directions.RIGHT);
                 }
             }
 
@@ -45,7 +46,6 @@ public class Game implements Runnable{
         gameThread.start();
     }
     public void render(){
-
     }
     @Override
     public void run() {
@@ -60,5 +60,5 @@ public class Game implements Runnable{
         }
     }
 
-    }
+}
 

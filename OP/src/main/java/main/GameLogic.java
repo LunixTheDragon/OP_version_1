@@ -6,7 +6,6 @@ import entity.Products;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 public class GameLogic {
     Player player;
     ArrayList<Products> products;
@@ -26,6 +25,19 @@ public class GameLogic {
         player.loadAni();
 
     }
+
+    public boolean predictCollision(Directions direction) {
+        Rectangle moveRectangle = new Rectangle();
+        switch (direction) {
+            case RIGHT -> {
+                moveRectangle = new Rectangle((int)player.getX() + playerSpeed,(int) player.getY(), player.getWidth(), player.getHeight());
+            }
+            case LEFT -> {
+                moveRectangle = new Rectangle((int)player.getX() - playerSpeed, (int)player.getY(), player.getWidth(), player.getHeight());
+            }
+        } return false;
+    }
+    
     public void update(){
     }
 

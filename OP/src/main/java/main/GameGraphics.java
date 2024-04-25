@@ -53,11 +53,9 @@ public class GameGraphics extends JFrame {
                 }
             }
         }
-
         public void updateAniTick(){
 
         }
-
         public void setAni(){
             int startAni = this.playerAction;
             if (this.moving) {
@@ -71,8 +69,6 @@ public class GameGraphics extends JFrame {
 
 
         }
-
-
         public void resetAniTick(){
             aniTick = 0;
             aniIndex = 0;

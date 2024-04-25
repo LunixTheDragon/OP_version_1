@@ -11,37 +11,38 @@ public class GameLogic {
     Player player;
     ArrayList<Products> products;
     private int xDelta;
-    public BufferedImage img;
-    public BufferedImage[][] animations;
-    public int aniTick;
-    public int aniIndex;
-    public int aniSpeed;
     Directions direct;
-    public boolean moving;
     public int score = 0;
-
+    private final int playerSpeed =20;
+    private final int fallingSpeed = 15;
     private void  setPaneSize(){
-        Dimension size = new Dimension(1664, 896);
+        this.player = null;
+        this.products = new ArrayList<>();
+    }
 
-    };
-    public void loadAni(){
+    public void initialize(){
+
+        player = new Player(500, 300, 56, 65, 3);
+
+
+
 
     }
 
-    public void updateAniTick(){
 
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setAni(){
-
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    public void updatePos(){
-
+    public ArrayList<Products> getProducts() {
+        return products;
     }
 
-    public void importImg(){
-
+    public void setProducts(ArrayList<Products> products) {
+        this.products = products;
     }
-
 }

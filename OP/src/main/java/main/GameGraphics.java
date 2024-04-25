@@ -19,7 +19,7 @@ public class GameGraphics extends JFrame {
         pack();
         setVisible(true);
         setTitle("GameWithoutName");
-        setSize(800, 1000);
+        setSize(600, 750);
     }
     public void render(GameLogic logic) {
         this.logic = logic;

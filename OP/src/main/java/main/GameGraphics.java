@@ -1,25 +1,33 @@
 package main;
 
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameGraphics extends JFrame {
     public Draw draw;
+    GameLogic logic;
     private int playerAction = 0;
     public GameGraphics(GameLogic logic){
         this.draw = new Draw();
         logic = new GameLogic();
-        setDefaultCloseOperation(3); //Exit on close
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(3); //Exit on close
         setResizable(false);
         pack();
         setVisible(true);
         setTitle("GameWithoutName");
         setSize(800, 1000);
     }
+    public void render(GameLogic logic) {
+        this.logic = logic;
+        repaint();
+    }
 
     public static class Draw extends JPanel{
+        Player player;
         private int playerAction = 0;
         private boolean moving = false;
         private int aniSpeed = 25;
@@ -28,7 +36,11 @@ public class GameGraphics extends JFrame {
         GameLogic logic;
         public BufferedImage[][] animations;
         protected void paintComponent(Graphics g){
-
+            super.paintComponent(g);
+            if (animations != null && animations.length > 0){
+                BufferedImage currentFrame = animations[playerAction][aniIndex];
+                g.drawImage(currentFrame, (int)player.getX(), (int)player.getY(), null);
+            }
         }
 
         public void loadAni(){

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class LoadSave {
-    public static final String PLAYER_ATLAS = "player_sheet_1.png";
+    public static final String PLAYER_ATLAS = "player_sprites.png";
 
     public LoadSave() {
     }

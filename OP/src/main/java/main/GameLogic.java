@@ -22,13 +22,12 @@ public class GameLogic {
 
     public void initialize(){
 
-        player = new Player(500, 300, 56, 65, 3);
-
-
-
+        player = new Player(400, 300, 56, 65, 3);
+        player.loadAni();
 
     }
-
+    public void update(){
+    }
 
     public Player getPlayer() {
         return player;

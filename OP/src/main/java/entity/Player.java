@@ -1,5 +1,6 @@
 package entity;
 
+import main.Directions;
 import main.LoadSave;
 
 import java.awt.Graphics;
@@ -9,11 +10,13 @@ public class Player extends Entity {
     private int lives = 3;
     private int speed = 5;
     private BufferedImage[][] animations;
+    private Directions dir;
 
     public Player(float x, float y, int width, int height, int lives) {
         super(x, y, width, height);
         this.loadAni();
         this.lives = lives;
+        this.dir = Directions.LEFT;
     }
 
     public void update() {

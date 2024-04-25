@@ -9,4 +9,6 @@ public class Products extends Entity {
         super(x, y, width, height);
         this.damageIfBad = damageIfBad;
     }
+    public void update(){
+    }
 }

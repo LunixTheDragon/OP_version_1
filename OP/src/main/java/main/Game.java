@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 public class Game implements Runnable{
     GameLogic logic = new GameLogic();
     GameGraphics gg;
+    Directions direct;
 
     private Thread gameThread;
     private final int FPS = 120;
@@ -56,7 +57,7 @@ public class Game implements Runnable{
 
     private void controlledMove(Directions direction) {
         if (!logic.predictCollision(direction)){
-            logic.movePlayer(direction);
+            //logic.movePlayer(direct);
         }
     }
 

@@ -8,17 +8,15 @@ public class Entity {
     protected int height;
     protected int width;
     protected float hitBox;
-    protected float gravity;
-    protected boolean isCollided;
     protected boolean productsResult;
-    protected BufferedImage img;
+    protected BufferedImage[][] img;
 
-    public Entity(float x, float y, int width, int height) {
+    public Entity(float x, float y, int width, int height, BufferedImage[][] img) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.productsResult = this.productsResult;
+        this.img = img;
     }
 
     public float getX() {

@@ -9,12 +9,10 @@ import java.awt.image.BufferedImage;
 public class GameGraphics extends JFrame {
     public Draw draw;
     GameLogic logic;
-    private int playerAction = 0;
     public GameGraphics(GameLogic logic){
         this.draw = new Draw();
-        logic = new GameLogic();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(3); //Exit on close
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Exit on close
         setResizable(false);
         pack();
         setVisible(true);
@@ -37,8 +35,8 @@ public class GameGraphics extends JFrame {
         public BufferedImage[][] animations;
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            if (animations != null && animations.length > 0){
-                BufferedImage currentFrame = animations[playerAction][aniIndex];
+            if (player != null && player.animations != null && player.animations.length > 0 ){
+                BufferedImage currentFrame = player.animations[playerAction][aniIndex];
                 g.drawImage(currentFrame, (int)player.getX(), (int)player.getY(), null);
             }
         }
@@ -66,22 +64,10 @@ public class GameGraphics extends JFrame {
             if (startAni != this.playerAction) {
                 this.resetAniTick();
             }
-
-
         }
         public void resetAniTick(){
             aniTick = 0;
             aniIndex = 0;
         }
-
-        public void updatePos(){
-
-        }
-
-        public void importImg(){
-
-        }
-
-
     }
 }

@@ -21,6 +21,7 @@ public class GameGraphics extends JFrame {
     }
     public void render(GameLogic logic) {
         this.logic = logic;
+        this.draw.setAni(logic.getPlayer().animations);
         repaint();
     }
 
@@ -31,39 +32,20 @@ public class GameGraphics extends JFrame {
         private int aniSpeed = 25;
         private int aniTick;
         private int aniIndex;
+        private BufferedImage[][] animations;
         GameLogic logic;
-        public BufferedImage[][] animations;
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             if (player != null && player.animations != null && player.animations.length > 0 ){
-                BufferedImage currentFrame = player.animations[playerAction][aniIndex];
+                BufferedImage currentFrame = player.animations[0][0];
                 g.drawImage(currentFrame, (int)player.getX(), (int)player.getY(), null);
-            }
-        }
-
-        public void loadAni(){
-            BufferedImage img = LoadSave.GetSpriteAtlas("player_sprites.png");
-            animations = new BufferedImage[9][6];
-
-            for(int j = 0; j < animations.length; ++j) {
-                for(int i = 0; i < animations[j].length; ++i) {
-                    animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
-                }
             }
         }
         public void updateAniTick(){
 
         }
-        public void setAni(){
-            int startAni = this.playerAction;
-            if (this.moving) {
-                this.playerAction = 1;
-            } else {
-                this.playerAction = 0;
-            }
-            if (startAni != this.playerAction) {
-                this.resetAniTick();
-            }
+        public void setAni(BufferedImage[][] animations) {
+            this.animations = this.animations;
         }
         public void resetAniTick(){
             aniTick = 0;

@@ -9,9 +9,9 @@ public class Entity {
     protected int width;
     protected float hitBox;
     protected boolean productsResult;
-    protected BufferedImage[][] img;
+    protected BufferedImage img;
 
-    public Entity(float x, float y, int width, int height, BufferedImage[][] img) {
+    public Entity(float x, float y, int width, int height, BufferedImage img) {
         this.x = x;
         this.y = y;
         this.width = width;

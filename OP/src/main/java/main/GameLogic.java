@@ -20,10 +20,8 @@ public class GameLogic {
     }
 
     public void initialize(){
-
         player = new Player(400, 300, 56, 65, 3);
         player.loadAni();
-
     }
 
     public boolean predictCollision(Directions direction) {

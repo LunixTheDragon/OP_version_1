@@ -18,8 +18,8 @@ public class Game implements Runnable{
         logic = new GameLogic();
         gg = new GameGraphics(logic);
         logic.initialize();
-        gg.draw.loadAni();
 
+        logic.getPlayer().loadAni();
 
         gg.addKeyListener(new KeyListener() {
             @Override

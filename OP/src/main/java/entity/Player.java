@@ -15,12 +15,13 @@ public class Player extends Entity {
     private Directions dir;
 
     public Player(float x, float y, int width, int height, int lives) {
-        super(x, y, width, height, GetSpriteAtlas("player_sprites.png")[1][2]);
+        super(x, y, width, height, GetSpriteAtlas("player_sprites.png")[1][0]);
+        this.animations = GetSpriteAtlas("player_sprites.png");
         this.dir = Directions.LEFT;
     }
     public void loadAni(){
-        BufferedImage img = LoadSave.GetSpriteAtlas("play_sprites.png");
-        animations = new BufferedImage[1][5];
+       BufferedImage[][] img = LoadSave.GetSpriteAtlas("player_sprites.png");
+       animations = new BufferedImage[1][5];
     }
 
     public void update() {

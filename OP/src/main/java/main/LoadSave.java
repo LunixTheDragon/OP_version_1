@@ -11,23 +11,28 @@ public class LoadSave {
     public LoadSave() {
     }
 
-    public static BufferedImage GetSpriteAtlas(String fileName) {
-        BufferedImage img = null;
+    public static BufferedImage[][] GetSpriteAtlas(String fileName) {
+        BufferedImage[][] sprites = null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
 
         try {
-            img = ImageIO.read(is);
-        } catch (IOException var12) {
-            var12.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException var11) {
-                var11.printStackTrace();
+            if (is != null){
+                BufferedImage img = ImageIO.read(is);
+            }else{
+                System.err.println("Unable to load sprite atlas: " + fileName);
             }
-
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (is != null){
+                    is.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
+        return sprites;
 
-        return img;
     }
 }

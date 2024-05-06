@@ -16,7 +16,7 @@ public class GameGraphics extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
-        setTitle("GameWithoutName");
+        setTitle("PribiňáčekGame");
         setSize(600, 750);
     }
     public void render(GameLogic logic) {
@@ -45,7 +45,7 @@ public class GameGraphics extends JFrame {
 
         }
         public void setAni(BufferedImage[][] animations) {
-            this.animations = this.animations;
+            this.animations = animations;
         }
         public void resetAniTick(){
             aniTick = 0;

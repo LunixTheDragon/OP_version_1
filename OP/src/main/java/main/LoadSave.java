@@ -15,9 +15,21 @@ public class LoadSave {
         BufferedImage[][] sprites = null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
 
+
         try {
-            if (is != null){
-                BufferedImage img = ImageIO.read(is);
+            BufferedImage img;
+            if (is != null) {
+                img = ImageIO.read(is);
+                int rows = 1; // Number of rows in your sprite sheet
+                int cols = 5; // Number of columns in your sprite sheet
+                int spriteWidth = img.getWidth() / cols;
+                int spriteHeight = img.getHeight() / rows;
+                sprites = new BufferedImage[rows][cols];
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++) {
+                        sprites[i][j] = img.getSubimage(j * spriteWidth, i * spriteHeight, spriteWidth, spriteHeight);
+                    }
+            }
             }else{
                 System.err.println("Unable to load sprite atlas: " + fileName);
             }

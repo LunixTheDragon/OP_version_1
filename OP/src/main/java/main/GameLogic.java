@@ -12,7 +12,7 @@ public class GameLogic {
     private int xDelta;
     Directions direct;
     public int score = 0;
-    private final int playerSpeed =20;
+    private final int playerSpeed = 20;
     private final int fallingSpeed = 15;
     private void  setPaneSize(){
         this.player = null;
@@ -20,7 +20,8 @@ public class GameLogic {
     }
 
     public void initialize(){
-        player = new Player(400, 300, 56, 65, 3);
+        // TODO: 64x40 size of player (each image in animation)
+        player = new Player(400, 300, 64, 40, 3);
         player.loadAni();
     }
 

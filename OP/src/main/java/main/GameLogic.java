@@ -21,7 +21,7 @@ public class GameLogic {
 
     public void initialize(){
         // TODO: 64x40 size of player (each image in animation)
-        player = new Player(400, 300, 64, 40, 3);
+        player = new Player(64, 40, 64, 40, 3);
         player.loadAni();
     }
 

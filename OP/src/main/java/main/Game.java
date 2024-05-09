@@ -18,9 +18,6 @@ public class Game implements Runnable{
         logic = new GameLogic();
         gg = new GameGraphics(logic);
         logic.initialize();
-
-        logic.getPlayer().loadAni();
-
         gg.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {

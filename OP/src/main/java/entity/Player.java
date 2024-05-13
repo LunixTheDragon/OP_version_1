@@ -23,10 +23,17 @@ public class Player extends Entity {
     }
     public void loadAni(){
         BufferedImage[][] img = LoadSave.GetSpriteAtlas("player_sprites.png");
-        for (int j = 0; j < animations.length; j++)
-            for (int i = 0; i < animations[j].length; i++)
-                animations[j][i] = img[j][i].getSubimage(i * playerWidth, j * playerHeight, playerHeight, playerWidth);
 
+        int spriteWidth = 64; // Width of each sprite
+        int spriteHeight = 40; // Height of each sprite
+
+        // Example: Extract a sub-image for the first animation frame
+        animations = new BufferedImage[1][5];
+        for (int i = 0; i < animations[0].length; i++) {
+            for (int j = 0; j < animations[i].length; j++){
+                animations[i][j] = img[i][j].getSubimage(i * spriteWidth, 0, spriteWidth, spriteHeight); //samotny i nefunguje
+            }
+        }
         /* TODO: I have no idea what this is and it should be something like this:
             for (int j = 0; j < animations.length; j++)
                 for (int i = 0; i < animations[j].length; i++)

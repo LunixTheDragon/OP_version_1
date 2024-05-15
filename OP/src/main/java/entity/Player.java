@@ -28,12 +28,12 @@ public class Player extends Entity {
         int spriteHeight = 40; // Height of each sprite
 
         // Example: Extract a sub-image for the first animation frame
-        animations = new BufferedImage[1][5];
-        for (int i = 0; i < animations[0].length; i++) {
-            for (int j = 0; j < animations[i].length; j++){
-                animations[i][j] = img[i][j].getSubimage(i * spriteWidth, 0, spriteWidth, spriteHeight); //samotny i nefunguje
-            }
-        }
+        //animations = new BufferedImage[9][6];
+        //for (int i = 0; i < animations.length; i++) {
+        //    for (int j = 0; j < animations[i].length; j++) {
+        //        animations[i][j] = img[i][j].getSubimage(j * spriteWidth, i * spriteHeight, spriteWidth, spriteHeight); //samotny i nefunguje
+        //    }
+        //}
         /* TODO: I have no idea what this is and it should be something like this:
             for (int j = 0; j < animations.length; j++)
                 for (int i = 0; i < animations[j].length; i++)

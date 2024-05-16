@@ -6,7 +6,7 @@ public class Products extends Entity {
     private boolean productDescription = true;
 
     public Products(float x, float y, int width, int height, boolean productDescription, int damageIfBad) {
-        super(x, y, width, height, null);
+        super(x, y, width, height);
         this.damageIfBad = damageIfBad;
     }
     public void update(){

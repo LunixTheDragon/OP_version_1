@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import entity.PlayerValues;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,7 +14,6 @@ public class GameGraphics extends JFrame {
     public Draw draw;
     public GameGraphics(GameLogic logic){
         this.draw = new Draw(logic);
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Exit on close
         setResizable(false);
         add(draw);
@@ -25,39 +25,63 @@ public class GameGraphics extends JFrame {
 
     public static class Draw extends JPanel{
         private final Player player;
-        private final BufferedImage[] idleAni;
+        private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 25; //120fpsa /4frames in second == 30
         private int xDelta = 100, yDelta = 100;
+        private BufferedImage img;
+        private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
 
         public Draw (GameLogic logic){
             this.player = logic.player;
-            BufferedImage img = importImg();
-            idleAni = loadAni(img);
+            importImg();
+            loadAni();
             setPanelSize();
         }
 
-        private BufferedImage[] loadAni(BufferedImage img){
-            BufferedImage[] frames = new BufferedImage[5];
-            for (int i = 0; i < frames.length; i++ ){
-                frames[i] = img.getSubimage(i * 64, 0, 64, 40);
+        public static int getSpriteAmount(PlayerValues values){
+            /*
+            TODO zmenit vsechny integery na pocet kolik je obrazku na jednom radku
+             */
+            switch (values){
+                case RUNNING:
+                    return 6;
+                case IDLE:
+                    return 5;
+                case HIT:
+                    return 4;
+                case JUMP:
+                case ATTACK_1:
+                case ATTACK_JUMP_1:
+                case ATTACK_JUMP_2:
+                    return 3;
+                case GROUND:
+                    return 2;
+                case FALLING:
+                default:
+                    return 1; //just workin for sure
             }
-            return frames;
         }
-        private BufferedImage importImg() {
-            InputStream is = getClass().getResourceAsStream("/player_sprites.phootoshop.done.png");
-            BufferedImage img = null;
+        private void loadAni(){
+            animations = new BufferedImage[9][6];       //length of animations arrays
+            for (int j = 0; j < animations.length; j++)
+             for (int i = 0; i < animations[j].length; i++ ){
+                 animations[j][i] = img.getSubimage(i * 64, j*40, 64, 40);
+             }
+         
+        }
+        private void importImg() {
+            InputStream is = getClass().getResourceAsStream("/player_sprites.png");
             try {
                 img = ImageIO.read(is);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    if (is != null) is.close();
+                    is.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            return img;
         }
         private void setPanelSize() {
             Dimension size = new Dimension(600, 750);
@@ -70,7 +94,7 @@ public class GameGraphics extends JFrame {
             if (aniTick >= aniSpeed){
                 aniTick = 0;
                 aniIndex++;
-                if (aniIndex >= idleAni.length){   //its goin 0 1 2 3 4 but when it gets to 5 it resets bcs we have [5]
+                if (aniIndex >= spriteAm){   //resets animation index
                     aniIndex = 0;
                 }
             }
@@ -79,7 +103,9 @@ public class GameGraphics extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             updateAnimationTick();
-            g.drawImage(idleAni[aniIndex], xDelta, yDelta, 128, 80, null);
+            PlayerValues currentAction = player.getAction();
+            spriteAm = getSpriteAmount(currentAction);
+            g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);//The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
         }
 
 

@@ -1,5 +1,6 @@
 package main;
 
+import entity.PlayerValues;
 import entity.Products;
 
 import java.awt.*;
@@ -14,18 +15,30 @@ public class Game implements Runnable{
     private final int FPS = 120;
     public Game(){
         logic = new GameLogic();
+        logic.initialize(); //GameLogic must be iniciliazed before GameGraphics for player to not to be null
         gg = new GameGraphics(logic);
-        logic.initialize();
+
         gg.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
             @Override
             public void keyPressed(KeyEvent e) {
-
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_D, KeyEvent.VK_A:
+                        logic.updatePlayerAction(PlayerValues.RUNNING);
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        logic.updatePlayerAction(PlayerValues.JUMP);
+                        break;
+                    default:
+                        logic.updatePlayerAction(PlayerValues.IDLE);
+                        break;
+                }
             }
             @Override
             public void keyReleased(KeyEvent e) {
+                logic.updatePlayerAction(PlayerValues.IDLE);
             }
         });
         gg.setFocusable(true);

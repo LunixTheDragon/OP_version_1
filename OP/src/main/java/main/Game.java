@@ -1,12 +1,9 @@
 package main;
 
 import entity.PlayerValues;
-import entity.Products;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 public class Game implements Runnable{
     GameLogic logic;
@@ -17,6 +14,7 @@ public class Game implements Runnable{
         logic = new GameLogic();
         logic.initialize(); //GameLogic must be iniciliazed before GameGraphics for player to not to be null
         gg = new GameGraphics(logic);
+        logic.setGameGraphics(gg);
 
         gg.addKeyListener(new KeyListener() {
             @Override
@@ -26,18 +24,18 @@ public class Game implements Runnable{
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_D, KeyEvent.VK_A:
-                        logic.updatePlayerAction(PlayerValues.RUNNING);
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        logic.updatePlayerAction(PlayerValues.JUMP);
+                        logic.setDirection(e.getKeyCode());
+                        logic.setMoving(true);
                         break;
                     default:
                         logic.updatePlayerAction(PlayerValues.IDLE);
+                        logic.setMoving(false);
                         break;
                 }
             }
             @Override
             public void keyReleased(KeyEvent e) {
+                logic.setMoving(false);
                 logic.updatePlayerAction(PlayerValues.IDLE);
             }
         });
@@ -58,6 +56,7 @@ public class Game implements Runnable{
         while (true) {
             now = System.nanoTime();
             if (now - lastFrame >= timePerFrame) {
+                logic.update();
                 gg.draw.repaint();
                 lastFrame = now;
                 frames++;

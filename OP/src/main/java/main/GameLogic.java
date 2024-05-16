@@ -4,32 +4,25 @@ import entity.Player;
 import entity.PlayerValues;
 import entity.Products;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 public class GameLogic {
     Player player;
     ArrayList<Products> products;
+    GameGraphics gg;
     private int playerDir = -1; //IDLE
     private boolean moving = false;
 
     public void initialize(){
         player = new Player(100, 100, 64, 40, 3); //where is spawn player
     }
-    public static int getDirectionAmount(Directions dir){
-        switch (dir) {
-            case LEFT:
-                return 0;
-            case RIGHT:
-                return 2;
-            default:
-                return -1;
-        }
+    public void setGameGraphics(GameGraphics gg){
+        this.gg = gg;
     }
     public void updatePlayerAction(PlayerValues action){
         player.setAction(action);
     }
-    public void setDIrection(int direction){
+    public void setDirection(int direction){
         this.playerDir = direction;
         moving = true;
     }
@@ -42,6 +35,22 @@ public class GameLogic {
         }else{
             updatePlayerAction(PlayerValues.IDLE);
         }
+    }
+    private void updatePos() {
+        if (this.moving) {
+            switch (this.playerDir) {
+                case KeyEvent.VK_A:
+                    gg.draw.xDelta -= 5;
+                    break;
+                case KeyEvent.VK_D:
+                    gg.draw.xDelta += 5;
+                    break;
+            }
+        }
+    }
+    public void update(){
+        setAni();
+        updatePos();
     }
     /*TODO tohle bude trida na kolize moving atd atd
     */

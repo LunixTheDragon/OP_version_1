@@ -14,6 +14,7 @@ public class GameGraphics extends JFrame {
     public Draw draw;
     public GameGraphics(GameLogic logic){
         this.draw = new Draw(logic);
+        logic.setGameGraphics(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Exit on close
         setResizable(false);
         add(draw);
@@ -24,15 +25,15 @@ public class GameGraphics extends JFrame {
     }
 
     public static class Draw extends JPanel{
-        private final Player player;
+        private final GameLogic logic;
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 25; //120fpsa /4frames in second == 30
-        private int xDelta = 100, yDelta = 100;
+        public int xDelta = 100, yDelta = 100;
         private BufferedImage img;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
 
         public Draw (GameLogic logic){
-            this.player = logic.player;
+            this.logic = logic;
             importImg();
             loadAni();
             setPanelSize();
@@ -63,11 +64,11 @@ public class GameGraphics extends JFrame {
         }
         private void loadAni(){
             animations = new BufferedImage[9][6];       //length of animations arrays
-            for (int j = 0; j < animations.length; j++)
-             for (int i = 0; i < animations[j].length; i++ ){
-                 animations[j][i] = img.getSubimage(i * 64, j*40, 64, 40);
-             }
-         
+            for (int j = 0; j < animations.length; j++) {
+                for (int i = 0; i < animations[j].length; i++) {
+                    animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+                }
+            }
         }
         private void importImg() {
             InputStream is = getClass().getResourceAsStream("/player_sprites.png");
@@ -103,7 +104,7 @@ public class GameGraphics extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             updateAnimationTick();
-            PlayerValues currentAction = player.getAction();
+            PlayerValues currentAction = logic.player.getAction();
             spriteAm = getSpriteAmount(currentAction);
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
         }

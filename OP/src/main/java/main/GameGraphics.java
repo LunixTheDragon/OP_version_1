@@ -105,7 +105,7 @@ public class GameGraphics extends JFrame {
             updateAnimationTick();
             PlayerValues currentAction = player.getAction();
             spriteAm = getSpriteAmount(currentAction);
-            g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);//The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
+            g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
         }
 
 

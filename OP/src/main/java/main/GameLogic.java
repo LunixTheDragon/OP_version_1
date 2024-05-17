@@ -14,7 +14,7 @@ public class GameLogic {
     private boolean moving = false;
 
     public void initialize(){
-        player = new Player(100, 100, 64, 40, 3); //where is spawn player
+        player = new Player(230, 270, 64, 40, 3); //where is spawn player
     }
     public void setGameGraphics(GameGraphics gg){
         this.gg = gg;
@@ -39,11 +39,11 @@ public class GameLogic {
     private void updatePos() {
         if (this.moving) {
             switch (this.playerDir) {
-                case KeyEvent.VK_A:
-                    gg.draw.xDelta -= 5;
+                case KeyEvent.VK_A ,KeyEvent.VK_LEFT:
+                    gg.draw.xDelta -= 3; //Players speed
                     break;
-                case KeyEvent.VK_D:
-                    gg.draw.xDelta += 5;
+                case KeyEvent.VK_D, KeyEvent.VK_RIGHT:
+                    gg.draw.xDelta += 3;
                     break;
             }
         }

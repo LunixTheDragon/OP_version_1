@@ -23,7 +23,7 @@ public class Game implements Runnable{
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
-                    case KeyEvent.VK_D, KeyEvent.VK_A:
+                    case KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT:
                         logic.setDirection(e.getKeyCode());
                         logic.setMoving(true);
                         break;

@@ -6,6 +6,8 @@ import entity.PlayerValues;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,17 @@ public class GameGraphics extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setTitle("PribiňáčekGame");
+        addWindowFocusListener(new WindowFocusListener() { //if we lose focus on the window we are still moving so this will prevent the unnecessary movement
+            @Override
+            public void windowGainedFocus(WindowEvent e) { //if we are in window
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) { //when we click somewhere else
+                System.out.println("Byeee");
+                logic.stopMoving();
+            }
+        });
     }
 
     public static class Draw extends JPanel{

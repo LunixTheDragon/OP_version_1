@@ -36,6 +36,9 @@ public class GameLogic {
             updatePlayerAction(PlayerValues.IDLE);
         }
     }
+    public void stopMoving(){
+        setMoving(false);
+    }
     private void updatePos() {
         if (this.moving) {
             switch (this.playerDir) {

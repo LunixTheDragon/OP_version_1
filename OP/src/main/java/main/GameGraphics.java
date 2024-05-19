@@ -1,7 +1,7 @@
 package main;
 
-import entity.Player;
 import entity.PlayerValues;
+import entity.Products;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +11,7 @@ import java.awt.event.WindowFocusListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class GameGraphics extends JFrame {
     public Draw draw;
@@ -42,14 +43,15 @@ public class GameGraphics extends JFrame {
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
         public int xDelta = 100, yDelta = 100;
-        private BufferedImage img;
+        private BufferedImage playerImg, productImage;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
 
         public Draw (GameLogic logic){
             this.logic = logic;
             xDelta = (int) logic.player.getX();
             yDelta = (int) logic.player.getY();//for the initial spawn point
-            importImg();
+            importPlayerImg();
+            importProductImg();
             loadAni();
             setPanelSize();
         }
@@ -81,20 +83,34 @@ public class GameGraphics extends JFrame {
             animations = new BufferedImage[9][6];       //length of animations arrays
             for (int j = 0; j < animations.length; j++) {
                 for (int i = 0; i < animations[j].length; i++) {
-                    animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+                    animations[j][i] = playerImg.getSubimage(i * 64, j * 40, 64, 40);
                 }
             }
         }
-        private void importImg() {
+        private void importPlayerImg() {
             InputStream is = getClass().getResourceAsStream("/player_sprites.phootoshop.done.png");
             try {
-                img = ImageIO.read(is);
+                playerImg = ImageIO.read(is);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
                     is.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        private void importProductImg() {
+            InputStream is = getClass().getResourceAsStream("/products.photoshop.done.png");
+            try {
+                productImage = ImageIO.read(is);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    is.close();
+                }catch (IOException e){
                     e.printStackTrace();
                 }
             }
@@ -118,9 +134,14 @@ public class GameGraphics extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             updateAnimationTick();
+            //draw Player
             PlayerValues currentAction = logic.player.getAction();
             spriteAm = getSpriteAmount(currentAction);
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
+            //draw Product
+            for(Products product: logic.products){
+                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), product.getWidth(), product.getHeight(), null);
+            }
         }
     }
 }

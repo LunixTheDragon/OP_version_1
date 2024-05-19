@@ -6,6 +6,9 @@ import entity.Products;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
 public class GameLogic {
     Player player;
     ArrayList<Products> products;
@@ -13,8 +16,10 @@ public class GameLogic {
     private int playerDir = -1; //IDLE
     private boolean moving = false;
 
+
     public void initialize(){
         player = new Player(230, 270, 64, 40, 3); //where is spawn player
+        products = new ArrayList<>();
     }
     public void setGameGraphics(GameGraphics gg){
         this.gg = gg;
@@ -36,6 +41,15 @@ public class GameLogic {
             updatePlayerAction(PlayerValues.IDLE);
         }
     }
+    private boolean descriptionOfProduct(){
+        Random rnd = new Random();
+        return rnd.nextBoolean();
+    }
+    public void spawnInitialProducts(){
+        for (int i = 0; i < 5; i++){
+            spawnProduct();
+        }
+    }
     public void stopMoving(){
         setMoving(false);
     }
@@ -54,6 +68,23 @@ public class GameLogic {
     public void update(){
         setAni();
         updatePos();
+        updateProducts();
+    }
+    private void updateProducts(){
+        for (Products product: products){
+            product.setY(product.getY() + 2); //falling speed
+            if (product.getY() > gg.getHeight()){
+                product.setY(0); //reset to top if it falls off the screen
+                product.setX(new Random().nextInt(gg.getWidth() - product.getWidth())); // new random x position
+            }
+        }
+    }
+    private void spawnProduct(){
+        Random rnd = new Random();
+        float x = rnd.nextInt(gg.getWidth() - 64);
+        float y = 0;
+        boolean isGood = descriptionOfProduct();
+        products.add(new Products(x, y ,64, 40, isGood, isGood ? 0 :1));
     }
     /*TODO tohle bude trida na kolize moving atd atd
     */

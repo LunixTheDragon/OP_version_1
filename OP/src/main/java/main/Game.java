@@ -15,6 +15,7 @@ public class Game implements Runnable{
         logic.initialize(); //GameLogic must be iniciliazed before GameGraphics for player to not to be null
         gg = new GameGraphics(logic);
         logic.setGameGraphics(gg);
+        logic.spawnInitialProducts();
 
         gg.addKeyListener(new KeyListener() {
             @Override
@@ -61,7 +62,6 @@ public class Game implements Runnable{
                 lastFrame = now;
                 frames++;
             }
-
             if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
                 System.out.println("FPS: " + frames);

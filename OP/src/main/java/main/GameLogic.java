@@ -81,10 +81,10 @@ public class GameLogic {
     }
     private void spawnProduct(){
         Random rnd = new Random();
-        float x = rnd.nextInt(gg.getWidth() - 64);
+        float x = rnd.nextInt(gg.getWidth() - 256);//width of product dont forget to change it in GameGraphics
         float y = 0;
         boolean isGood = descriptionOfProduct();
-        products.add(new Products(x, y ,64, 40, isGood, isGood ? 0 :1));
+        products.add(new Products(x, y ,256, 160, isGood, isGood ? 0 :1));
     }
     /*TODO tohle bude trida na kolize moving atd atd
     */

@@ -42,7 +42,7 @@ public class GameGraphics extends JFrame {
         private final GameLogic logic;
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
-        public int xDelta = 100, yDelta = 100;
+        public int xDelta, yDelta;
         private BufferedImage playerImg, productImage;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
 
@@ -140,7 +140,7 @@ public class GameGraphics extends JFrame {
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
             //draw Product
             for(Products product: logic.products){
-                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), product.getWidth(), product.getHeight(), null);
+                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), 256, 160, null);
             }
         }
     }

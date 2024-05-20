@@ -1,5 +1,6 @@
 package main;
 
+import entity.Backround;
 import entity.Player;
 import entity.PlayerValues;
 import entity.Products;
@@ -12,6 +13,7 @@ import java.util.Random;
 public class GameLogic {
     Player player;
     ArrayList<Products> products;
+    Backround backround;
     GameGraphics gg;
     private int playerDir = -1; //IDLE
     private boolean moving = false;
@@ -20,6 +22,7 @@ public class GameLogic {
     public void initialize(){
         player = new Player(230, 375, 64, 40, 3); //where is spawn player
         products = new ArrayList<>();
+        backround = new Backround(0, 0, 600, 750);
     }
     public void setGameGraphics(GameGraphics gg){
         this.gg = gg;

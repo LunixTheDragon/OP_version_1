@@ -11,7 +11,6 @@ import java.awt.event.WindowFocusListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class GameGraphics extends JFrame {
     public Draw draw;
@@ -43,13 +42,15 @@ public class GameGraphics extends JFrame {
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
         public int xDelta, yDelta;
-        private BufferedImage playerImg, productImage;
+        private BufferedImage playerImg, productImage, backroundImage;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
+        private String imageData;
 
         public Draw (GameLogic logic){
             this.logic = logic;
             xDelta = (int) logic.player.getX();
             yDelta = (int) logic.player.getY();//for the initial spawn point
+            importBackroundImg();
             importPlayerImg();
             importProductImg();
             loadAni();
@@ -115,12 +116,26 @@ public class GameGraphics extends JFrame {
                 }
             }
         }
+        private void importBackroundImg(){
+            InputStream is = getClass().getResourceAsStream("/backround_first_try.png");
+            try {
+                productImage = ImageIO.read(is);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    is.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
         private void setPanelSize() {
             Dimension size = new Dimension(600, 750);
             setPreferredSize(size);   //for JPanel to fit in JFrame
         }
 
-        private void updateAnimationTick() {
+        private void updateAniTick() {
             aniTick ++;
             if (aniTick >= aniSpeed){
                 aniTick = 0;
@@ -133,7 +148,9 @@ public class GameGraphics extends JFrame {
 
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            updateAnimationTick();
+            updateAniTick();
+            //draw Backround
+            g.drawImage(backroundImage, 0,0, this.getWidth(), this.getHeight(), null);
             //draw Player
             PlayerValues currentAction = logic.player.getAction();
             spriteAm = getSpriteAmount(currentAction);

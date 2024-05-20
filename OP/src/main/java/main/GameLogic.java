@@ -18,7 +18,7 @@ public class GameLogic {
 
 
     public void initialize(){
-        player = new Player(230, 270, 64, 40, 3); //where is spawn player
+        player = new Player(230, 375, 64, 40, 3); //where is spawn player
         products = new ArrayList<>();
     }
     public void setGameGraphics(GameGraphics gg){

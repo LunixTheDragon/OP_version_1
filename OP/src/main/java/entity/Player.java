@@ -1,12 +1,5 @@
 package entity;
 
-import main.Directions;
-
-
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-
 
 public class Player extends Entity {
     private int lives;

@@ -1,7 +1,7 @@
 package main;
 
-import entity.Player;
 import entity.PlayerValues;
+import entity.Products;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -62,14 +62,21 @@ public class GameGraphics extends JFrame {
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
         public int xDelta, yDelta;
+<<<<<<< HEAD
         private BufferedImage img;
+=======
+        private BufferedImage playerImg, productImage, backroundImage;
+>>>>>>> origin/main
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
+        private String imageData;
 
         public Draw (GameLogic logic){
             this.logic = logic;
             xDelta = (int) logic.player.getX();
             yDelta = (int) logic.player.getY();//for the initial spawn point
-            importImg();
+            importBackroundImg();
+            importPlayerImg();
+            importProductImg();
             loadAni();
             setPanelSize();
         }
@@ -101,14 +108,14 @@ public class GameGraphics extends JFrame {
             animations = new BufferedImage[9][6];       //length of animations arrays
             for (int j = 0; j < animations.length; j++) {
                 for (int i = 0; i < animations[j].length; i++) {
-                    animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+                    animations[j][i] = playerImg.getSubimage(i * 64, j * 40, 64, 40);
                 }
             }
         }
-        private void importImg() {
+        private void importPlayerImg() {
             InputStream is = getClass().getResourceAsStream("/player_sprites.phootoshop.done.png");
             try {
-                img = ImageIO.read(is);
+                playerImg = ImageIO.read(is);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -119,12 +126,40 @@ public class GameGraphics extends JFrame {
                 }
             }
         }
+        private void importProductImg() {
+            InputStream is = getClass().getResourceAsStream("/products.photoshop.done.png");
+            try {
+                productImage = ImageIO.read(is);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    is.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        private void importBackroundImg(){
+            InputStream is = getClass().getResourceAsStream("/backround_first_try.png");
+            try {
+                productImage = ImageIO.read(is);
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    is.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
         private void setPanelSize() {
             Dimension size = new Dimension(600, 750);
             setPreferredSize(size);   //for JPanel to fit in JFrame
         }
 
-        private void updateAnimationTick() {
+        private void updateAniTick() {
             aniTick ++;
             if (aniTick >= aniSpeed){
                 aniTick = 0;
@@ -137,10 +172,17 @@ public class GameGraphics extends JFrame {
 
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            updateAnimationTick();
+            updateAniTick();
+            //draw Backround
+            g.drawImage(backroundImage, 0,0, this.getWidth(), this.getHeight(), null);
+            //draw Player
             PlayerValues currentAction = logic.player.getAction();
             spriteAm = getSpriteAmount(currentAction);
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
+            //draw Product
+            for(Products product: logic.products){
+                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), 256, 160, null);
+            }
         }
     }
 }

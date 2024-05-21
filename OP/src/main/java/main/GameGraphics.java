@@ -13,17 +13,32 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GameGraphics extends JFrame {
-    public Draw draw;
+    static Draw draw;
+    private GameLogic logic;
+    private static CardLayout cardLayout;
+    private static JPanel mainPanel;
+    private Menu menu;
     public GameGraphics(GameLogic logic){
+        this.logic = logic;
         this.draw = new Draw(logic);
         logic.setGameGraphics(this);
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        menu = new Menu(this);
+        mainPanel.add(menu, "Menu");
+        mainPanel.add(draw, "Game");
+
+        add(mainPanel);
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Exit on close
         setResizable(false);
-        add(draw);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setTitle("PribiňáčekGame");
+        setSize(600, 750); //size of JFrame
         addWindowFocusListener(new WindowFocusListener() { //if we lose focus on the window we are still moving so this will prevent the unnecessary movement
             @Override
             public void windowGainedFocus(WindowEvent e) { //if we are in window
@@ -37,11 +52,16 @@ public class GameGraphics extends JFrame {
         });
     }
 
+    public static void showGame(){
+        cardLayout.show(mainPanel, "Game");
+        draw.requestFocusInWindow(); //Ensure the game panel has focus
+    }
+
     public static class Draw extends JPanel{
         private final GameLogic logic;
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
-        public int xDelta = 100, yDelta = 100;
+        public int xDelta, yDelta;
         private BufferedImage img;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
 
@@ -63,8 +83,6 @@ public class GameGraphics extends JFrame {
                     return 6;
                 case IDLE:
                     return 5;
-                case HIT:
-                    return 4;
                 case JUMP:
                 case ATTACK_1:
                 case ATTACK_JUMP_1:
@@ -73,6 +91,8 @@ public class GameGraphics extends JFrame {
                 case GROUND:
                     return 2;
                 case FALLING:
+                case GOODPRODUCT:
+                    return 4;
                 default:
                     return 1; //just workin for sure
             }

@@ -11,7 +11,7 @@ public class GameLogic {
     ArrayList<Products> products;
     GameGraphics gg;
     private int playerDir = -1; //IDLE
-    private boolean moving = false;
+    private boolean movingAni = false, goodProductAni = false;
 
     public void initialize(){
         player = new Player(230, 270, 64, 40, 3); //where is spawn player
@@ -24,23 +24,26 @@ public class GameLogic {
     }
     public void setDirection(int direction){
         this.playerDir = direction;
-        moving = true;
+        movingAni = true;
     }
-    public void setMoving(boolean moving){
-        this.moving = moving;
+    public void setGoodProductAni(boolean goodProductAni){
+        this.goodProductAni = goodProductAni;
+    }
+    public void stopMoving(){
+        setMovingAni(false);
+    }
+    public void setMovingAni(boolean movingAni){
+        this.movingAni = movingAni;
     }
     private void setAni(){
-        if (moving){
+        if (movingAni){
             updatePlayerAction(PlayerValues.RUNNING);
         }else{
             updatePlayerAction(PlayerValues.IDLE);
         }
     }
-    public void stopMoving(){
-        setMoving(false);
-    }
     private void updatePos() {
-        if (this.moving) {
+        if (this.movingAni) {
             switch (this.playerDir) {
                 case KeyEvent.VK_A ,KeyEvent.VK_LEFT:
                     gg.draw.xDelta -= 3; //Players speed

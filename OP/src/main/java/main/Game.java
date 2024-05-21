@@ -25,17 +25,17 @@ public class Game implements Runnable{
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT:
                         logic.setDirection(e.getKeyCode());
-                        logic.setMoving(true);
+                        logic.setMovingAni(true);
                         break;
                     default:
                         logic.updatePlayerAction(PlayerValues.IDLE);
-                        logic.setMoving(false);
+                        logic.setMovingAni(false);
                         break;
                 }
             }
             @Override
             public void keyReleased(KeyEvent e) {
-                logic.setMoving(false);
+                logic.setMovingAni(false);
                 logic.updatePlayerAction(PlayerValues.IDLE);
             }
         });
